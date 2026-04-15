@@ -1,19 +1,54 @@
-.battle-container{
-  display:grid;
+.title{
+  font-size: 50px;
+  display:flex;
   align-items: center;
+  justify-content: center;
 }
 
-.ally-1{
+.battle-container{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+.enemy{
+  width: 600px;
+  height: 400px;
+}
+
+.enemy-container{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 30px;
+}
+
+.ally{
   width: 200px;
   height: 200px;
 }
 
-.ally-2{
-  width: 200px;
-  height: 200px;
+.counter-blue{
+  background-color: rgb(36, 124, 255);
+  width:100px;
+  height: 40px;
 }
 
-.ally-3{
-  width: 200px;
-  height: 200px;
+.counter-red{
+  background-color: rgb(231, 31, 31);
+  color: #fff;
+  width:100px;
+  height: 40px;
+}
+
+.counter-green{
+  background-color: rgb(91, 201, 64);
+  width:100px;
+  height: 40px;
+}
+
+.health-text{
+  padding: 10px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
 }
