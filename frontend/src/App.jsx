@@ -1,121 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from "react";
+import enemy from "./assets/devil.jpg";
+import water from "./assets/water.png";
+import fire from "./assets/fire.png";
+import green from "./assets/green.png";
+
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [blueDmg, setblueDmg] = useState(10);
+  const [redDmg, setredDmg] = useState(10);
+  const [greenDmg, setgreenDmg] = useState(10);
+  const [blueHealth, setblueHealth] = useState(100);
+  const [redHealth, setredHealth] = useState(100);
+  const [greenHealth, setgreenHealth] = useState(100);
+  const [enemyHealth, setEnemyHealth] = useState(600);
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+      <section>
+        <h1 className="title">DESTROY EVIL JAVA</h1>
+        <div className="enemy-container">
+          <img src={enemy} className="enemy" />
+          <h3>Health bar: {enemyHealth} </h3>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
 
-      <div className="ticks"></div>
+        <div className="battle-container">
+          <img src={water} className="ally" />
+          <button
+            className="counter-blue"
+            onClick={() => setEnemyHealth((enemyHealth) => enemyHealth - blueDmg)}
+          >
+            Water attack!!!
+          </button>
+          <h4 className="health-text">Health:{blueHealth}</h4>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
+          <img src={fire} className="ally" />
+          <button
+            className="counter-red"
+            onClick={() => setEnemyHealth((enemyHealth) => enemyHealth - redDmg)}
+          >
+            Fire attack!!!
+          </button>
+          <h4 className="health-text">Health:{redHealth}</h4>
+
+          <img src={green} className="ally" />
+          <button
+            className="counter-green"
+            onClick={() => setEnemyHealth((enemyHealth) => enemyHealth - greenDmg)}
+          >
+            Green attack!!!
+          </button>
+          <h4 className="health-text">Health:{greenHealth}</h4>
         </div>
       </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
