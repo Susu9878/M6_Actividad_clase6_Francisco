@@ -1,37 +1,25 @@
 package com.backend.m6_activity.models;
 
-public class Player extends Character{
-    private int lowMultiplier;
-    private int mediumMultiplier;
-    private int highMultiplier;
+public class Player {
+    private String id;
+    private int hp;
 
-    public Player(){}
-
-    public int getLowMult(){
-        return lowMultiplier;
-    }
-    public void setLowMult(int mult){
-        this.lowMultiplier = mult;
+    public Player() {
     }
 
-    public int getMediumMult(){
-        return mediumMultiplier;
-    }
-    public void setMediumMult(int mult){
-        this.mediumMultiplier = mult;
+    public String getId() {
+        return id;
     }
 
-    public int getHighMult(){
-        return highMultiplier;
+    public void setId(String id) {
+        this.id = id;
     }
-    public void setHighMult(int mult){
-        this.highMultiplier = mult;
+
+    public int getHp() {
+        return hp;
     }
-    
-    @Override
-    public String toString(){
-        return getName() + ". " + getCurrentHealth() + "/" + getMaxHealth() + ".\n" +
-               "Base Damage: " + getDamage() + ".\n" +
-               "Multipliers: ";
+
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 }

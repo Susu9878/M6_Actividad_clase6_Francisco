@@ -1,29 +1,34 @@
 package com.backend.m6_activity.services;
 
-import java.util.HashMap;
-import java.util.Map;
-import org.springframework.stereotype.Service;
-import com.google.cloud.firestore.Firestore;
+import com.backend.m6_activity.models.Battle;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import org.springframework.stereotype.Service;
 
 @Service
 public class FirebaseService {
-    public String guardarDato() {
-        try {
-            // obtener instancia de Firestore
-            Firestore db = FirestoreClient.getFirestore();
-            // datos a guardar
-            Map<String, Object> data = new HashMap<>();
-            data.put("mensaje", "Conexion exitosa con Firestore");
-            data.put("estado", "ok");
-            // guardar en colección
-            db.collection("test")
-                    .document("doc1")
-                    .set(data);
-            return "Datos guardados correctamente";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Error al guardar datos";
-        }
+
+    public Firestore getDB() {
+        return FirestoreClient.getFirestore();
+    }
+
+    public void listenToBattle(String battleId) {
+        Firestore db = getDB();
+
+        db.collection("battle")
+          .document(battleId)
+          .addSnapshotListener((snapshot, error) -> {
+
+              if (error != null) {
+                  error.printStackTrace();
+                  return;
+              }
+
+              if (snapshot != null && snapshot.exists()) {
+                  Battle battle = snapshot.toObject(Battle.class);
+
+                  System.out.println("Boss HP: " + battle.getBoss().getHp());
+              }
+          });
     }
 }

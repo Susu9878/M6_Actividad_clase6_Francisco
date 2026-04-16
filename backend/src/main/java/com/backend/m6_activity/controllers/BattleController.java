@@ -1,42 +1,33 @@
 package com.backend.m6_activity.controllers;
 
+import com.backend.m6_activity.services.BattleService;
+import com.backend.m6_activity.services.FirebaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-
-import com.backend.m6_activity.models.Boss;
-import com.backend.m6_activity.services.BattleConsultService;
-import com.backend.m6_activity.services.BattleService;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 
 
 @RestController
+@RequestMapping("/battle")
 public class BattleController {
     @Autowired
     private BattleService battleService;
 
-    @GetMapping("/battle/stream")
-    public SseEmitter streamBatalla() {
-        return battleService.agregarCliente();
-    }
-
     @Autowired
-    private BattleConsultService battleConsultService;
+    private FirebaseService firebaseService;
 
-    @GetMapping("/api/boss/vida")
-    public String getBossLife() throws Exception {
-        return BattleConsultService.getVidaBoss();
+    @GetMapping("/listen/{battleId}")
+    public String listen(@RequestParam String battleId){
+        firebaseService.listenToBattle(battleId);
+        return "Listening to batte " + battleId;
     }
-    
-    @PostMapping("/api/addBoss")
-    public Boss postBoss(@RequestBody Boss boss) throws Exception{
-        //TODO: process POST request
-        
-        return battleConsultService.saveBoss(boss);
+
+    @PostMapping("/attack/{battleId}")
+    public String attack(@RequestParam String battleId){
+        battleService.attackBoss(battleId);
+        return "Boss atacked";
     }
-    
 }
