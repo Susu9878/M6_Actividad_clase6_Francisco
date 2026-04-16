@@ -12,23 +12,23 @@ public class FirebaseService {
         return FirestoreClient.getFirestore();
     }
 
-    public void listenToBattle(String battleId) {
-        Firestore db = getDB();
+    public Battle getBattle(String battleId) {
+        try {
+            Firestore db = getDB();
 
-        db.collection("battle")
-          .document(battleId)
-          .addSnapshotListener((snapshot, error) -> {
+            DocumentSnapshot snapshot = db.collection("battle")
+                    .document(battleId)
+                    .get()
+                    .get();
 
-              if (error != null) {
-                  error.printStackTrace();
-                  return;
-              }
+            if (snapshot.exists()) {
+                return snapshot.toObject(Battle.class);
+            }
 
-              if (snapshot != null && snapshot.exists()) {
-                  Battle battle = snapshot.toObject(Battle.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-                  System.out.println("Boss HP: " + battle.getBoss().getHp());
-              }
-          });
+        return null;
     }
 }

@@ -13,29 +13,61 @@ public class BattleService {
     @Autowired
     private FirebaseService firebaseService;
 
-    public void attackBoss(String battleId) {
-
+    public void attackBoss(String battleId, String type) {
         Firestore db = firebaseService.getDB();
         DocumentReference docRef = db.collection("battle").document(battleId);
 
         try {
             DocumentSnapshot snapshot = docRef.get().get();
-
             if (!snapshot.exists()) {
                 System.out.println("battle doocument not found");
                 return;
             }
-
             Battle battle = snapshot.toObject(Battle.class);
 
-            System.out.println("Current HP: " + battle.getBoss().getHp());
+            int damage = 0;
+            boolean hit = false;
 
-            int currentHp = battle.getBoss().getHp();
-            battle.getBoss().setHp(currentHp - 10);
+            double roll = Math.random();
+
+            switch (type.toLowerCase()) {
+                case "green":
+                    hit = roll < 0.9;
+                    damage = 15;
+                    break;
+                case "water":
+                    hit = roll < 0.5;
+                    damage = 35;
+                    break;
+                case "red":
+                    hit = roll < 0.3;
+                    damage = 75;
+                    break;
+            }
+
+            if (hit) {
+                int newHp = battle.getBoss().getHp() - damage;
+                battle.getBoss().setHp(Math.max(newHp, 0));
+            }
 
             docRef.set(battle);
 
-            System.out.println("New HP: " + battle.getBoss().getHp());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void resetBattle(String battleId) {
+        Firestore db = firebaseService.getDB();
+        DocumentReference docRef = db.collection("battle").document(battleId);
+
+        try {
+            DocumentSnapshot snapshot = docRef.get().get();
+            Battle battle = snapshot.toObject(Battle.class);
+
+            battle.getBoss().setHp(600);
+
+            docRef.set(battle);
 
         } catch (Exception e) {
             e.printStackTrace();
